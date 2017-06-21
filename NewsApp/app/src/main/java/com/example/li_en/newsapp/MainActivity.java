@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.li_en.newsapp.utilities.NetworkUtils;
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mNewsTextView;
     private TextView mUrlDisplayTextView;
+    private ProgressBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mNewsTextView = (TextView) findViewById(R.id.news_search_results);
+        bar = (ProgressBar) findViewById(R.id.progressBar);
+
         //mUrlDisplayTextView = (TextView) findViewById(R.id.url_display);
     }
 
@@ -39,7 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
     public class FetchNewsTask extends AsyncTask<String, Void, String>{
         @Override
+        protected void onPreExecute(){
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected String doInBackground(String... params){
+
             if(params.length == 0){
                 return null;
             }
@@ -61,12 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String newsData){
+            bar.setVisibility(View.GONE);
             if(newsData != null && !newsData.equals("")) {
                 mNewsTextView.setText(newsData);
+
 //                for (String news : newsData){
 //                    mNewsTextView.append(news + "\n\n");
 //                }
             }
+
         }
     }
 

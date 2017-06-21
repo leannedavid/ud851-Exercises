@@ -29,10 +29,8 @@ public final class NetworkUtils {
     final static String SORT_PARAM = "sortBy";
     final static String API_KEY_PARAM = "apiKey";
 
-    public static String get_API_Key(){
-        return API_KEY;
-    }
-
+    //pass as a parameter if needed to
+    public static String get_API_Key(){ return API_KEY; }
 
     public static URL buildUrl(String apiKey) {
         Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
